@@ -46,10 +46,14 @@ case REGISTER_##uname_ :\
 #undef WRITE_REGISTER
 
   void beginWrite(REGISTER r) {
+    DEBUG::log("Begining register write");
+    DEBUG::write(r);
     writeRegister(r, HIGH);
   }
 
   void endWrite(REGISTER r) {
+    DEBUG::log("Ending register read");
+    DEBUG::write(r);
     writeRegister(r, LOW);
   }
 
@@ -82,10 +86,14 @@ case REGISTER_##uname_ :\
 #undef READ_REGISTER
 
   void beginRead(REGISTER r) {
+    DEBUG::log("Begining register read");
+    DEBUG::write(r);
     readRegister(r, HIGH);
   }
 
   void endRead(REGISTER r) {
+    DEBUG::log("Ending register read");
+    DEBUG::write(r);
     readRegister(r, LOW);
   }
 

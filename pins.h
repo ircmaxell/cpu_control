@@ -11,11 +11,11 @@ namespace PINS {
   ALU_CONTROL;
 
   const ALU_CONTROL alu = {
-    1,
-    1,
-    1,
-    1,
-    1
+    1, // mode4
+    1, // mode2
+    1, // mode1
+    1, // zero
+    1  // invert
   };
 
   const byte data_bus[] = {
@@ -100,6 +100,7 @@ namespace PINS {
     , //alu_flags
     {
       1,1  }
+      //memory
   };
 }
 

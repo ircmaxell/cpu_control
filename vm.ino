@@ -15,6 +15,7 @@ namespace VM {
 
 #define DISPATCH(code_,name_) \
       case code_:\
+        DEBUG::instruction(#name_); \
         INSTRUCTIONS::name_();\
         break;
 
