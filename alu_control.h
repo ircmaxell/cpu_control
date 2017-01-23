@@ -10,6 +10,13 @@ namespace ALU {
     boolean invert;
   } 
   CONTROL_OP;
+  
+  typedef enum FLAGS {
+    FLAG_ZERO,
+    FLAG_SIGN,
+    FLAG_CARRY
+  }
+  FLAGS;
 
   typedef enum OP {
     OP_ADD,
@@ -61,6 +68,8 @@ namespace ALU {
   void setup();
 
   void setMode(OP op);
+  
+  boolean hasFlag(byte value, FLAGS flag);
 
 }
 

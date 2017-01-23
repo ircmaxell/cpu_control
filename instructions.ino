@@ -110,5 +110,53 @@ namespace INSTRUCTIONS {
     REGISTERS::endRead(REGISTERS::decodeRead(r));
     REGISTERS::endRead(REGISTERS::REGISTER_J);
   }
+
+  ALU_OP(add, ADD)
+  ALU_OP(sub, SUB)
+  ALU_OP(bw_and, AND)
+  ALU_OP(bw_or, OR)
+  ALU_OP(bw_xor, XOR)
+  ALU_OP(inc, INC)
+  ALU_OP(dec, DEC)
+  ALU_OP(ff, FF)
+  ALU_OP(zero, 00)
+  ALU_OP(bw_not, NOT)  
+
+  void jump() {
+    PC_READ_START();
+    REGISTERS::beginWrite(REGISTERS::REGISTER_J1);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_J1);
+    PC_READ_END();
+    PC_INC();
+    PC_READ_START();
+    REGISTERS::beginWrite(REGISTERS::REGISTER_J2);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_J2);
+    PC_READ_END();
+    REGISTERS::beginRead(REGISTERS::REGISTER_J);
+    REGISTERS::beginWrite(REGISTERS::REGISTER_PC);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_PC);
+    REGISTERS::endRead(REGISTERS::REGISTER_J);
+  }
   
+  void jump_indirect() {
+    REGISTERS::beginRead(REGISTERS::REGISTER_J);
+    REGISTERS::beginWrite(REGISTERS::REGISTER_PC);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_PC);
+    REGISTERS::endRead(REGISTERS::REGISTER_J);
+  }
+  
+  JUMP_FLAG(zero, ZERO, 0);
+  JUMP_FLAG(not_zero, ZERO, 1);
+  JUMP_FLAG(negative, SIGN, 0);
+  JUMP_FLAG(positive, SIGN, 1);
+  JUMP_FLAG(carry, CARRY, 0);
+  JUMP_FLAG(no_carry, CARRY, 1);
+
+  
+  
+ 
 }
