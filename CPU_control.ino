@@ -4,6 +4,7 @@
 #include "pins.h"
 #include "registers.h"
 #include "instructions.h"
+#include "vm.h"
 
 void setup() {
   ALU::setup();
