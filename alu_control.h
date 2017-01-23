@@ -46,7 +46,7 @@ namespace ALU {
     , // inc
     {
       false, false, false, true, true    }
-    , // dec
+    , // de      c
     {
       false, true, false, true, true    }
     , // FF

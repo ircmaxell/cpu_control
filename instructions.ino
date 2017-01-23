@@ -48,7 +48,7 @@ namespace INSTRUCTIONS {
     PC_INC();
   }
   
-  void load_memory() {
+  void load_address() {
     byte r;
     PC_READ(r);
     PC_INC();
@@ -63,11 +63,52 @@ namespace INSTRUCTIONS {
     wait();
     REGISTERS::endWrite(REGISTERS::REGISTER_J2);
     PC_READ_END();
+    PC_INC();
     REGISTERS::beginRead(REGISTERS::REGISTER_J);
+    REGISTERS::beginRead(REGISTERS::REGISTER_MEMORY);
     REGISTERS::beginWrite(REGISTERS::decodeWrite(r));
     wait();
     REGISTERS::endWrite(REGISTERS::decodeWrite(r));
-    REGISTERS::endWrite(REGISTERS::REGISTER_J);
+    REGISTERS::endRead(REGISTERS::REGISTER_MEMORY);
+    REGISTERS::endRead(REGISTERS::REGISTER_J);
+  }
+  
+  void store() {
+    byte r;
+    PC_READ(r);
+    PC_INC();
+    REGISTERS::beginRead(REGISTERS::REGISTER_J);
+    REGISTERS::beginRead(REGISTERS::decodeRead(r));
+    REGISTERS::beginWrite(REGISTERS::REGISTER_MEMORY);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_MEMORY);
+    REGISTERS::endRead(REGISTERS::decodeRead(r));
+    REGISTERS::endRead(REGISTERS::REGISTER_J);
+  }
+  
+  void store_address() {
+    byte r;
+    PC_READ(r);
+    PC_INC();
+    PC_READ_START();
+    REGISTERS::beginWrite(REGISTERS::REGISTER_J1);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_J1);
+    PC_READ_END();
+    PC_INC();
+    PC_READ_START();
+    REGISTERS::beginWrite(REGISTERS::REGISTER_J2);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_J2);
+    PC_READ_END();
+    PC_INC();
+    REGISTERS::beginRead(REGISTERS::REGISTER_J);
+    REGISTERS::beginRead(REGISTERS::decodeRead(r));
+    REGISTERS::beginWrite(REGISTERS::REGISTER_MEMORY);
+    wait();
+    REGISTERS::endWrite(REGISTERS::REGISTER_MEMORY);
+    REGISTERS::endRead(REGISTERS::decodeRead(r));
+    REGISTERS::endRead(REGISTERS::REGISTER_J);
   }
   
 }

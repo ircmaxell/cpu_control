@@ -13,19 +13,22 @@ namespace VM {
     }
   }
 
+#define DISPATCH(code_,name_) \
+      case code_:\
+        INSTRUCTIONS::name_();\
+        break;
+
   int dispatch(byte instruction) {
     switch (instruction) {
       case 0x00:
         return 1;
-      case 0x01:
-        INSTRUCTIONS::move();
-        break;
-      case 0x02:
-        INSTRUCTIONS::load();
-        break;
-      case 0x03:
-        INSTRUCTIONS::load_immediate();
-        break;
+      DISPATCH(0x01, move);
+      DISPATCH(0x02, load);
+      DISPATCH(0x03, load_immediate);
+      DISPATCH(0x04, load_address);
+      DISPATCH(0x05, store);
+      DISPATCH(0x06, store_address);
+      
     }
   }
 
