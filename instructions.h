@@ -1,6 +1,6 @@
 
 namespace INSTRUCTIONS {
-  const int cycleDelay = 100; // microseconds
+  const int cycleDelay = 1000; // microseconds
 
   void wait();
   
@@ -34,23 +34,23 @@ namespace INSTRUCTIONS {
     wait(); \
     PC_INC_END()
     
-#define ALU_OP(name_,op_name_)                        \
-  void name_() {                                      \
-    byte r;                                           \
-    PC_READ(r);                                       \
-    PC_INC_START();                                   \
-    REGISTERS::beginRead(REGISTERS::decodeRead(r));   \
-    ALU::setMode(ALU::OP_##op_name_);                 \
-    REGISTERS::beginWrite(REGISTERS::REGISTER_ALU);   \
-    wait();                                           \
-    REGISTERS::endWrite(REGISTERS::REGISTER_ALU);     \
-    REGISTERS::endRead(REGISTERS::decodeRead(r));     \
-    PC_INC_END();                                     \
-    REGISTERS::beginRead(REGISTERS::REGISTER_ALU);    \
-    REGISTERS::beginWrite(REGISTERS::decodeWrite(r)); \
-    wait();                                           \
-    REGISTERS::endWrite(REGISTERS::decodeWrite(r));   \
-    REGISTERS::endRead(REGISTERS::REGISTER_ALU);      \
+#define ALU_OP(name_,op_name_)                            \
+  void name_() {                                          \
+    byte r;                                               \
+    PC_READ(r);                                           \
+    PC_INC_START();                                       \
+    REGISTERS::beginRead(REGISTERS::decodeRead(r));       \
+    ALU::setMode(ALU::OP_##op_name_);                     \
+    REGISTERS::beginWrite(REGISTERS::REGISTER_ALU);       \
+    wait();                                               \
+    REGISTERS::endWrite(REGISTERS::REGISTER_ALU);         \
+    REGISTERS::endRead(REGISTERS::decodeRead(r));         \
+    PC_INC_END();                                         \
+    REGISTERS::beginRead(REGISTERS::REGISTER_ALU_RESULT); \
+    REGISTERS::beginWrite(REGISTERS::decodeWrite(r));     \
+    wait();                                               \
+    REGISTERS::endWrite(REGISTERS::decodeWrite(r));       \
+    REGISTERS::endRead(REGISTERS::REGISTER_ALU_RESULT);   \
   }
   
 #define READ_REGISTER(name_,dest_) \

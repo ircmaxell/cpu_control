@@ -1,12 +1,14 @@
 
 namespace DEBUG {
- 
+#if DEBUG_ENABLE 
   void setup() {
+
     Serial.begin(9600);
   }
 
   void log(char *value) {
     Serial.println(value);
+    delay(50);
   }
   
   void write(ADDRESS_BUS::address a) {
@@ -14,6 +16,23 @@ namespace DEBUG {
     Serial.print(a, HEX);
     Serial.print("\n");
   }
+  
+  void write(int data) {
+    Serial.print("Integer: ");
+    Serial.print(data);
+    Serial.print("\n");
+  }
+  void write(long data) {
+    Serial.print("Long: ");
+    Serial.print(data);
+    Serial.print("\n");
+  }
+  void write(unsigned long data) {
+    Serial.print("ULong: ");
+    Serial.print(data, HEX);
+    Serial.print("\n");
+  }
+
 
 #define DEBUG_ALU_OP(name_) case ALU::OP_##name_ : Serial.print(#name_); Serial.print("\n"); break;
 
@@ -71,4 +90,33 @@ namespace DEBUG {
     Serial.print(name);
     Serial.print("\n");
   }
+#else
+  void setup() {
+  }
+
+  void log(char *value) {
+  }
+  
+  void write(ADDRESS_BUS::address a) {
+  }
+  
+  void write(int data) {
+  }
+  void write(long data) {
+  }
+  void write(unsigned long data) {
+  }
+
+  void write(ALU::OP op) {
+  }
+  
+  void write(byte data) {
+  }
+  
+  void write(REGISTERS::REGISTER r) {
+  }
+  
+  void instruction(char *name) {
+  }
+#endif
 }

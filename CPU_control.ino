@@ -19,36 +19,61 @@ void setup() {
 }
 
 void loop() {
-  //loadProgram(program1);
-  //VM::run();
-  loadMemoryTest();
+  loadProgram(fibo);
+  reset();
+  VM::run();
+ 
+  DEBUG::log("Exiting");
+  delay(1000);
+  
+  ADDRESS_BUS::beginWrite(0x000F);
+  delay(1000);
+  
   exit(0);
 }
 
 void loadMemoryTest() {
-  for (int i = 0; i < 1<<16; i++) {
-    ADDRESS_BUS::beginWrite(i & 0xFFFF);
-    DATA_BUS::beginWrite(i & 0xFF);
+  DEBUG::log("Loading memory test...");
+  long i = 0;
+  long j = 1UL << 16;
+  DEBUG::write(j);
+  for (i = 0; i < j; i++) {
+    DEBUG::write(i);
+    delay(10);
+    ADDRESS_BUS::beginWrite(((int) i) & 0xFFFFUL);
+    DATA_BUS::beginWrite(((int) i) & 0xFF);
     REGISTERS::beginWrite(REGISTERS::REGISTER_MEMORY);
     INSTRUCTIONS::wait();
     REGISTERS::endWrite(REGISTERS::REGISTER_MEMORY);
     DATA_BUS::endWrite();
     ADDRESS_BUS::endWrite();
   }
+  DEBUG::log("Memory test completed");
 }
 
 void loadProgram(PROGRAM p) {
   DEBUG::log("Loading program...");
-  for (int i = 0; i < p.length; i++) {
-    ADDRESS_BUS::beginWrite(i & 0xFFFF);
+  REGISTERS::beginWrite(REGISTERS::REGISTER_PC);
+  for (unsigned int i = 0; i < p.length; i++) {
+    ADDRESS_BUS::beginWrite(((int) i) & 0xFFFFUL);
     DATA_BUS::beginWrite(p.data[i]);
     REGISTERS::beginWrite(REGISTERS::REGISTER_MEMORY);
     INSTRUCTIONS::wait();
+    delay(5);
     REGISTERS::endWrite(REGISTERS::REGISTER_MEMORY);
     DATA_BUS::endWrite();
     ADDRESS_BUS::endWrite();
   }
+  REGISTERS::endWrite(REGISTERS::REGISTER_PC);
   DEBUG::log("Loaded");
+}
+
+void reset() {
+  ADDRESS_BUS::beginWrite(0);
+  REGISTERS::beginWrite(REGISTERS::REGISTER_PC);
+  INSTRUCTIONS::wait();
+  REGISTERS::endWrite(REGISTERS::REGISTER_PC);
+  ADDRESS_BUS::endWrite();
 }
 
 

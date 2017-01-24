@@ -11,19 +11,41 @@ namespace PINS {
   ALU_CONTROL;
 
   const ALU_CONTROL alu = {
-    1, // mode4
-    1, // mode2
-    1, // mode1
-    1, // zero
-    1  // invert
+    2, // mode4
+    3, // mode2
+    4, // mode1
+    5, // zero
+    6  // invert
   };
 
   const byte data_bus[] = {
-    1,1,1,1,1,1,1,1
+    38,
+    40,
+    42,
+    44,
+    46,
+    48,
+    50,
+    52
   };
 
   const byte address_bus[] = {
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1    
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    51,
+    53
   };
 
   typedef struct REGISTER_RO {
@@ -60,46 +82,46 @@ namespace PINS {
   } 
   registers = {
     {
-      1,1    }
+      36,15    }
     , // a
     {
-      1,1    }
+      32,30    }
     , // b
     {
-      1,1    }
+      28,26    }
     , // c
     {
-      1    }
+      24    }
     , //j1
     {
-      1    }
+      22    }
     , //j2
     {
-      1    }
+      21    }
     , //j
     {
-      1,1    }
+      20,19 }
     , //pc
     {
-      1    }
+      18    }
     , //incdec
     {
-      1    }
+      17    }
     , //inc
     {
-      1    }
+      16    }
     , //dec
     {
-      1    }
+      13    }  
     , //alu
     {
-      1    }
+      12    }
     , //alu_result
     {
-      1    }
+      11    }
     , //alu_flags
     {
-      1,1  }
+      10, 9  }
       //memory
   };
 }

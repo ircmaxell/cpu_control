@@ -10,7 +10,7 @@ namespace ADDRESS_BUS {
     DEBUG::write(data);
     setPinModes(OUTPUT);
     for (int i = 0; i < 16; i++) {
-      digitalWrite(PINS::address_bus[i], data & (1 << i) ? HIGH : LOW);
+      digitalWrite(PINS::address_bus[i], data & (1UL << i) ? HIGH : LOW);
     }
   }
   

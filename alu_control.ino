@@ -10,8 +10,6 @@ namespace ALU {
   }
   
   void setMode(OP op) {
-    DEBUG::log("Changing ALU Mode");
-    DEBUG::write(op);
     digitalWrite(PINS::alu.mode4, ops[op].mode4 ? HIGH : LOW);
     digitalWrite(PINS::alu.mode2, ops[op].mode2 ? HIGH : LOW);
     digitalWrite(PINS::alu.mode1, ops[op].mode1 ? HIGH : LOW);

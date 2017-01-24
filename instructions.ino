@@ -2,13 +2,13 @@
 namespace INSTRUCTIONS {
   
   void wait() {
+    //delay(1000);
     delayMicroseconds(cycleDelay);
   }
 
   byte decode() {
     byte instruction = 0;
     PC_READ(instruction);
-    PC_READ_END();
     PC_INC();
     return instruction;
   }
@@ -20,7 +20,7 @@ namespace INSTRUCTIONS {
     REGISTERS::beginRead(REGISTERS::decodeRead(r));
     REGISTERS::beginWrite(REGISTERS::decodeWrite(r));
     wait();
-    REGISTERS::endWrite(REGISTERS::decodeWrite(4));
+    REGISTERS::endWrite(REGISTERS::decodeWrite(r));
     REGISTERS::endRead(REGISTERS::decodeRead(r));
     PC_INC_END();
   }
